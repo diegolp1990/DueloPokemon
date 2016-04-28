@@ -3,15 +3,17 @@ package lista06_Pokemon.exercicio1;
 public class ModelarLutador {
 	private String nomeJogador;
 	private int idadeJogador,teamPok;
-	public ModelarPokemon[] pokemons = new ModelarPokemon[5];
+	public ModelarPokemon[] pokemons = new ModelarPokemon[6];
 	
 	public ModelarLutador (String nome,int idade,int teamPk){
 		nomeJogador=nome;
 		idadeJogador=idade;
 		teamPok=teamPk;
+		EscolherPokemons();
+		
 	}
 	
-	public void EscolherPokemons(){
+	private void EscolherPokemons(){
 		if (teamPok==1){
 			pokemons[0]=new ModelarPokemon("Rhydon","Lightning Rod","Rock Head","Reckless","Tremor",300,"GR");
 			pokemons[1]=new ModelarPokemon("Onix","Sturdy","Rock Head","Weak Armor","Giant",400,"GR");
