@@ -23,8 +23,25 @@ public class ModelarPokemon {
 		return HP;
 	}
 	
+	public String getNome(){
+		return nome;
+	}
+	
 	public void setHP(int sangue){
 		HP+=sangue;
 	}
 	
+	public String ataque(int numAtaque){
+		if (numAtaque==1)
+			return ataque1;
+		else if (numAtaque==2)
+			return ataque2;
+		else if (numAtaque==3)
+			return ataque3;
+		else 
+			return ataque4;
+	}
+	
+	
+		
 }

@@ -42,7 +42,7 @@ class EventoSet{
 						
 		}while(eventos[next]==null);
 		
-		return eventos [next];	
+		return eventos[next];	
 	}
 	
 	
@@ -51,6 +51,7 @@ class EventoSet{
 	 */
 	public void removeCurrent(){
 		eventos[next]=null;
+
 	}
 	
 }
@@ -59,7 +60,8 @@ public class Controlador {
 	private EventoSet es=new EventoSet();
 	
 	public void AdicionaEvento(Eventos c){
-		es.Adiciona(c);		
+		es.Adiciona(c);	
+
 	}
 	
 	public void rodar() {
