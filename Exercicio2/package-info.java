@@ -5,4 +5,4 @@
  * @author mac0321.18
  *
  */
-package lista06_Pokemon.exercicio1;
+package lista6_Pokemon.exercicio2;
