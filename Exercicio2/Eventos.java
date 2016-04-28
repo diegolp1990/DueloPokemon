@@ -1,4 +1,4 @@
-package lista6_Pokemon.exercicio2;
+package lista06_Pokemon.exercicio2;
 /*
  * Classe respons�vel por controlar o momento de tal evento ocorrer.
  * 

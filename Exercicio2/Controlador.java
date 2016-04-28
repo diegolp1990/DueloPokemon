@@ -1,4 +1,4 @@
-package lista6_Pokemon.exercicio2;
+package lista06_Pokemon.exercicio2;
 
 
 /*
@@ -82,7 +82,8 @@ public class Controlador {
 			if (ev.lerTempo()){ // Se o evento ja pode ser executado
 				ev.acao();
 				System.out.println(ev.description());
-				es.removeCurrent();				
+				es.removeCurrent();		
+				
 			}
 		}
 	}
