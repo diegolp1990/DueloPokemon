@@ -1,11 +1,13 @@
 package lista06_Pokemon.exercicio2;
 
+import java.util.Random;
+
 public class LutaPokemon extends Controlador{
-	private static int i1,i2,tipoLuta;
+	private static int i1=0,i2=0,tipoLuta;
 	private int round=0;
 	private static ModelarLutador treinador1;
 	private static ModelarLutador treinador2;
-	private boolean fim;
+	private boolean fim=false,troca=false;
 	
 	//------------------------------------------------------	
 	private class atacar extends Eventos{
@@ -24,12 +26,24 @@ public class LutaPokemon extends Controlador{
 					
 		public void acao() {			
 			p2.setHP(-100);
+			
 			if (TemPokemons(treinador)!=true)
 				fim=true;
+				
+			if (p2.getHP()<=0 && tipoLuta==2){
+				System.out.println("Pokemon Selvagem perdeu");
+				limparEventos();
+				troca=true;
+			}
 		}
 
 		public String description() {
-			return (p1.getNome() + " atacou com " +p1.ataque(ataque)+"\n" + p2.getNome() + " sofreu 100 de dano. HP: " + p2.getHP());  
+			if (troca==false){
+				return (p1.getNome() + " atacou com " +p1.ataque(ataque)+"\n" + p2.getNome() + " sofreu 100 de dano. HP: " + p2.getHP());
+			}
+			else{
+				return (p1.getNome() + " venceu!");
+			}
 			
 		}		
 		
@@ -113,11 +127,12 @@ public class LutaPokemon extends Controlador{
 
 		public void acao() {
 			
+			
+			
 			if (round==0){
 				treinador1=new ModelarLutador("Pablo",13,2); 
 			}
-			i1=1;
-			i2=1;
+			
 			long tempoEvento = System.currentTimeMillis();		
 	
 			
@@ -164,35 +179,51 @@ public class LutaPokemon extends Controlador{
 			
 			else {
 				
-				int contadora=3;
-				treinador2=new ModelarLutador("Pokemon Selvagem",0,3); 
-				treinador2.setNome(treinador2.pokemons[0].getNome());
-				
-				while (fim!=true){
-					
-					
-					//Acoes do treinador de acordo com a multiplicidade do turno
-					
-					if (contadora%3==0){//ataque
-						AdicionaEvento(new atacar(tempoEvento+2000,treinador1.pokemons[i1],treinador2.pokemons[i2],treinador2,3)); 
-					}
-					else if(contadora%5==0){//item
-						AdicionaEvento(new Item(tempoEvento+1500, treinador1.pokemons[i1]));
-					}
-					else if (contadora%7==0){//troca
-						AdicionaEvento(new TrocarPokemon(tempoEvento+1000, treinador1, 2, 1));
-					}
-					else if (contadora%11==0){//fugir
-						
-					}
-					
-					//acoes do pokemon selvagem (aleatoria)	
-					if (TemPokemons(treinador2)){
-						int at=3; // --> fazer at ser aleatório
-						AdicionaEvento(new atacar(tempoEvento+1000,treinador2.pokemons[0],treinador1.pokemons[i1],treinador1,at)); 				
-					}		
-					contadora++;
+				if (troca==true){
+					System.exit(0);
 				}
+												
+				if (round==0){
+					treinador2=new ModelarLutador("Pokemon Selvagem",0,3); 
+					treinador2.setNome(treinador2.pokemons[0].getNome());
+					round++;
+				}
+				Random ataqueAle= new Random ();	
+				if (treinador1.pokemons[i1].getHP()<=100){
+					AdicionaEvento(new TrocarPokemon(tempoEvento-500, treinador1, i1+1, 1));
+				}
+				else if (round==1){//ataque
+					AdicionaEvento(new atacar(tempoEvento,treinador1.pokemons[i1],treinador2.pokemons[0],treinador2,3));
+					round++;
+				}
+				else if(round==2){//ataque
+					AdicionaEvento(new atacar(tempoEvento,treinador1.pokemons[i1],treinador2.pokemons[0],treinador2,3)); 
+					round++;
+				}
+				else if (round==3){//item
+					AdicionaEvento(new Item(tempoEvento, treinador1.pokemons[i1]));
+					round++;
+				}
+				else if (round==4){//ataque
+					AdicionaEvento(new atacar(tempoEvento,treinador1.pokemons[i1],treinador2.pokemons[0],treinador2,3)); 
+					round++;
+				}
+				else if (round==5){//item
+					AdicionaEvento(new Item(tempoEvento, treinador1.pokemons[i1]));
+					round++;
+				}
+					
+				//acoes do pokemon selvagem (aleatoria)	
+				if (TemPokemons(treinador2)){
+					int at = ataqueAle.nextInt(4)+1;//Escolhe aleatoriamente um dos 4 ataques do pokemon selvagem
+					if (treinador1.pokemons[i1].getHP()<=100){
+						AdicionaEvento(new atacar(tempoEvento+1000,treinador2.pokemons[0],treinador1.pokemons[i1+1],treinador1,at)); 				
+					}
+					else {
+					AdicionaEvento(new atacar(tempoEvento+1000,treinador2.pokemons[0],treinador1.pokemons[i1],treinador1,at)); 
+					}
+				}		
+				
 								
 			}
 			
@@ -225,8 +256,9 @@ public class LutaPokemon extends Controlador{
 	public static boolean TemPokemons(ModelarLutador treinador1){
 		
 		for (int k=0;k<6;k++){
-			if (treinador1.pokemons[k].getHP()>0)
-				return true;			
+			if (treinador1.pokemons[k]==null||treinador1.pokemons[k].getHP()>0 ){
+				return true;
+			}
 		}		
 		return false;
 	}
@@ -234,15 +266,16 @@ public class LutaPokemon extends Controlador{
 	//------------------------------------------------------
 
 	public static void main(String[] args)  {
-		
+		/*
 		LutaPokemon luta=new LutaPokemon();
 		long tempoEvento = System.currentTimeMillis();
-		tipoLuta=1;
+		tipoLuta=2;
 		luta.limparEventos();
 		luta.AdicionaEvento(luta.new IniciarLuta(tempoEvento));
-		luta.rodar();
-		
-			
+		luta.rodar();	*/	
+		CriaCampo campo= new CriaCampo();
+		campo.imprimirCampo();
+		campo.posicaoBoneco(4, 3);
 	}
 	
 	

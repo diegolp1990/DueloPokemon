@@ -33,7 +33,7 @@ public class ModelarLutador {
 			pokemons[5]=new ModelarPokemon("Krabby","Hyper Cutter","Shell Armor","Sheer Force","Fear",210,"W");
 		}
 		else{ // pokemon selvagem
-			pokemons[0]=new ModelarPokemon("Gyarados","Intimidate","Mold Breaker","Moxie","Poer water",380,"FW");
+			pokemons[0]=new ModelarPokemon("Pikachu","Choque do trovao","Raio do trovao","Cabecada","Force",380,"FW");
 		}
 			
 	}

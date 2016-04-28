@@ -48,7 +48,7 @@ class EventoSet{
 	}
 	
 	public void limpaVetor(){
-		for (int n=0;n<=eventos.length;n++){
+		for (int n=0;n<eventos.length;n++){
 			eventos[n]=null;
 			index=0;
 			next=0;
@@ -73,7 +73,7 @@ public class Controlador {
 	}
 	
 	public void limparEventos(){
-		
+		es.limpaVetor();
 	}
 	
 	public void rodar() {
