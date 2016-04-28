@@ -1,8 +1,8 @@
-package lista06_Pokemon.exercicio2;
+package lista06_Pokemon.exercicio1;
 /*
- * Classe respons�vel por controlar o momento de tal evento ocorrer.
+ * Classe responsavel por controlar o momento de tal evento ocorrer.
  * 
- * � necess�rio implementar o que ser� feit quando o for o tempo do evento ocorrer e
+ * � necessario implementar o que ser� feit quando o for o tempo do evento ocorrer e
  * o que mostrar ap�s a acao ocorrer
  */
 
