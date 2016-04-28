@@ -42,6 +42,8 @@ public class ModelarPokemon {
 			return ataque4;
 	}
 	
-	
+	public String getTipo(){
+		return tipo;
+	}
 		
 }

@@ -37,6 +37,8 @@ public class ModelarLutador {
 		return nomeJogador;
 	}
 	
-	
+	public int getIdade(){
+		return idadeJogador;
+	}
 }
 

@@ -11,23 +11,24 @@ public class LutaPokemon extends Controlador{
 		
 		private ModelarPokemon p1,p2;
 		private int ataque;
-		private ModelarLutador treinador1,treinador2;
+		private ModelarLutador treinador;
 		
-		public atacar(long tempoEvento,ModelarPokemon pk1,ModelarPokemon pk2,int ataque) {
+		public atacar(long tempoEvento,ModelarPokemon pk1,ModelarPokemon pk2,ModelarLutador trein,int ataque) {
 			super(tempoEvento);
 			p1=pk1;	
 			p2=pk2;	
 			this.ataque=ataque;
+			treinador=trein;
 		}
 					
 		public void acao() {			
 			p2.setHP(-100);
-			if (TemPokemons(treinador2)!=true)
+			if (TemPokemons(treinador)!=true)
 				fim=true;
 		}
 
 		public String description() {
-			return (p1.getNome() + "atacou com " +p1.ataque(ataque)+"\n " + p2.getNome() + " sofreu 100 de dano. HP: " + p2.getHP());  
+			return (p1.getNome() + " atacou com " +p1.ataque(ataque)+"\n " + p2.getNome() + " sofreu 100 de dano. HP: " + p2.getHP());  
 			
 		}		
 		
@@ -114,16 +115,37 @@ public class LutaPokemon extends Controlador{
 			
 			//Seguindo a ordem de preferencia: atacar (soma 1000 do anterior), item (soma 750 do anterior), trocar (soma 500 do anterior)
 			// e fugir (soma 250 do anterior).
-			AdicionaEvento(new atacar(tempoEvento,treinador1.pokemons[i1],treinador2.pokemons[i2],3)); //treinador 1 ataca treinador 2
+			AdicionaEvento(new atacar(tempoEvento,treinador1.pokemons[i1],treinador2.pokemons[i2],treinador2,3)); //treinador 1 ataca treinador 2
 			if (fim==true)
+				System.out.println("treinador 2 não tem mais pokemons");
 				System.exit(0);	
-			AdicionaEvento(new atacar(tempoEvento+1000,treinador2.pokemons[i2],treinador1.pokemons[i1],3)); //treinador 2 ataca treinador 1
+			
+			AdicionaEvento(new atacar(tempoEvento+1000,treinador2.pokemons[i2],treinador1.pokemons[i1],treinador1,3)); //treinador 2 ataca treinador 1
 			if (fim==true)
+				System.out.println("treinador 1 não tem mais pokemons");
 				System.exit(0);	
+			
 			AdicionaEvento(new TrocarPokemon(tempoEvento+1500, treinador1, 2, 1)); //treinador 1 troca de pokemon
 			
 			AdicionaEvento(new Item(tempoEvento+2250, treinador2.pokemons[i2]));//treinador 2 enche o sangue
 			
+			AdicionaEvento(new atacar(tempoEvento+3250,treinador1.pokemons[i1],treinador2.pokemons[i2],treinador2,3)); //treinador 1 ataca treinador 2
+			if (fim==true)
+				System.out.println("treinador 2 não tem mais pokemons");
+				System.exit(0);	
+			
+			AdicionaEvento(new Item(tempoEvento+3000, treinador2.pokemons[i2]));//treinador 2 enche o sangue
+			
+			AdicionaEvento(new atacar(tempoEvento+4000,treinador1.pokemons[i1],treinador2.pokemons[i2],treinador2,3)); //treinador 1 ataca treinador 2
+			if (fim==true)
+				System.out.println("treinador 2 não tem mais pokemons");
+				System.exit(0);				
+			
+			AdicionaEvento(new atacar(tempoEvento+1000,treinador2.pokemons[i2],treinador1.pokemons[i1],treinador1,3)); //treinador 2 ataca treinador 1
+			if (fim==true)
+				System.out.println("treinador 1 não tem mais pokemons");
+				System.exit(0);
+				
 			AdicionaEvento(new Fugir(tempoEvento+2500, treinador1, treinador2));//treinador 1 foge da luta			
 			if (fim==true)
 				System.exit(0);			
