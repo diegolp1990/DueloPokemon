@@ -1,4 +1,4 @@
-package lista06_Pokemon.exercicio1;
+package lista6_Pokemon.exercicio1;
 
 public class ModelarPokemon {
 	private String nome;

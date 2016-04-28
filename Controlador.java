@@ -1,4 +1,4 @@
-package lista06_Pokemon.exercicio1;
+package lista6_Pokemon.exercicio1;
 
 
 /*
@@ -47,13 +47,19 @@ class EventoSet{
 		return (eventos [next]);	
 	}
 	
-	
+	public void limpaVetor(){
+		for (int n=0;n<=eventos.length;n++){
+			eventos[n]=null;
+			index=0;
+			next=0;
+		}
+	}
 	/*
 	 * Remover o evento em questao
 	 */
 	public void removeCurrent(){		
 		eventos[next]=null;
-
+		
 	}
 	
 }
@@ -66,12 +72,16 @@ public class Controlador {
 
 	}
 	
-	public void rodar() throws InterruptedException {
+	public void limparEventos(){
+		
+	}
+	
+	public void rodar() {
 		Eventos ev;
 		while ((ev= es.getNext()) != null) {
 			if (ev.lerTempo()){ // Se o evento ja pode ser executado
 				ev.acao();
-				System.out.println (ev.description());
+				System.out.println(ev.description());
 				es.removeCurrent();				
 			}
 		}
