@@ -1,4 +1,4 @@
-package lista06_Pokemon.exercicio2;
+package lista06_Pokemon.exercicio1;
 
 public class ModelarLutador {
 	private String nomeJogador;
@@ -14,7 +14,7 @@ public class ModelarLutador {
 	}
 	
 	
-	//Possibilidade de escolher dois times com 6 pokemons cada, ou 1 pokemon caso o treinador esteja no gramado
+	//Possibilidade de escolher dois times com 6 pokemons cada
 	private void EscolherPokemons(){
 		if (teamPok==1){ //time 1
 			pokemons[0]=new ModelarPokemon("Rhydon","Lightning Rod","Rock Head","Reckless","Tremor",300,"GR");
@@ -32,9 +32,7 @@ public class ModelarLutador {
 			pokemons[4]=new ModelarPokemon("Diglett","Sand Veil","Arena Trap","Sand Force","Hidden",200,"G");
 			pokemons[5]=new ModelarPokemon("Krabby","Hyper Cutter","Shell Armor","Sheer Force","Fear",210,"W");
 		}
-		else{ // pokemon selvagem
-			pokemons[0]=new ModelarPokemon("Gyarados","Intimidate","Mold Breaker","Moxie","Poer water",380,"FW");
-		}
+		
 			
 	}
 	
