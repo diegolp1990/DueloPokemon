@@ -32,25 +32,28 @@ class EventoSet{
 		boolean looped =false;
 		int inicio=next;
 		do {
+			
 			next=(next+1) % eventos.length;
 			
 			if (inicio==next)
 				looped=true;
 			
-			if ((next==(inicio+1) % eventos.length) && looped)
+			if ((next==(inicio+1) % eventos.length) && looped){				
 				return null;
+			}
 						
 		}while(eventos[next]==null);
-		
-		return eventos [next];	
+	
+		return (eventos [next]);	
 	}
 	
 	
 	/*
 	 * Remover o evento em questao
 	 */
-	public void removeCurrent(){
+	public void removeCurrent(){		
 		eventos[next]=null;
+
 	}
 	
 }
@@ -59,17 +62,17 @@ public class Controlador {
 	private EventoSet es=new EventoSet();
 	
 	public void AdicionaEvento(Eventos c){
-		es.Adiciona(c);		
+		es.Adiciona(c);	
+
 	}
 	
-	public void rodar() {
+	public void rodar() throws InterruptedException {
 		Eventos ev;
-		ev=es.getNext();
-		while (ev != null) {
+		while ((ev= es.getNext()) != null) {
 			if (ev.lerTempo()){ // Se o evento ja pode ser executado
 				ev.acao();
 				System.out.println (ev.description());
-				es.removeCurrent();
+				es.removeCurrent();				
 			}
 		}
 	}
