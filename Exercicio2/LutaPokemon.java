@@ -7,7 +7,7 @@ public class LutaPokemon extends Controlador{
 	private int round=0;
 	private static ModelarLutador treinador1;
 	private static ModelarLutador treinador2;
-	private boolean fim=false,troca=false;
+	private boolean fim=false,troca=false,liberaJornada=true;
 	
 	//------------------------------------------------------	
 	private class atacar extends Eventos{
@@ -180,7 +180,7 @@ public class LutaPokemon extends Controlador{
 			else {
 				
 				if (troca==true){
-					System.exit(0);
+					liberaJornada=true;
 				}
 												
 				if (round==0){
@@ -234,6 +234,11 @@ public class LutaPokemon extends Controlador{
 				}
 			}
 			
+			if (liberaJornada){
+				limparEventos();
+				AdicionaEvento(new Jornada(tempoEvento+3000));
+			}
+			
 		}
 
 
@@ -249,12 +254,15 @@ public class LutaPokemon extends Controlador{
  * se encontra, se for no gramado ele tem probabilidade de 60% para lutarc contra um pokemon silvestre.
  */
 	private class Jornada extends Eventos{
-		private int probabilidade;
+		private int probabilidade,chamada=1;
 		private CriaCampo campo;
 		public Jornada(long tempoEvento) {
 			super(tempoEvento+3000);
+			if(chamada==1){
 			campo= new CriaCampo();
 			campo.andarBoneco(1, 1);
+			chamada++;
+			}
 		}
 
 		public void acao() {
@@ -264,19 +272,24 @@ public class LutaPokemon extends Controlador{
 
 			Random prob= new Random ();	
 
-			if(campo.PegarLocalBoneco()=="G"){//sd o treinador esta no gramado
+			if(campo.PegarLocalBoneco()=="G"){//se o treinador esta no gramado
 				probabilidade=prob.nextInt(10)+1;
 				if (probabilidade>2 && probabilidade<=8){//60% de lutar
 					tipoLuta=2;
+					liberaJornada=false;
 					AdicionaEvento(new IniciarLuta(tempoEvento));
+					System.out.println("Você esta sendo atacado por um pokemon");
 				}				
 			}			
-			AdicionaEvento(new Jornada(tempoEvento+3000));
+			if (liberaJornada==true){
+				AdicionaEvento(new Jornada(tempoEvento+1000));
+
+			}
 			
 		}
 
 		public String description() {
-			return ("Treinador andando no mapa");
+			return("")		;
 		}
 		
 		
