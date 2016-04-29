@@ -281,7 +281,7 @@ public class LutaPokemon extends Controlador{
 					System.out.println("Você esta sendo atacado por um pokemon");
 				}				
 			}			
-			if (liberaJornada==true){
+			if (liberaJornada==true){//jornada soh pode ocorrer depois da luta contra o pokemon selvagem ou enquanto ela nao inicia
 				AdicionaEvento(new Jornada(tempoEvento+1000));
 
 			}
