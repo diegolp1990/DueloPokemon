@@ -244,8 +244,43 @@ public class LutaPokemon extends Controlador{
 	}
 	
 	//------------------------------------------------------
+/*
+ * Classe responsavel por mover o treinador pelo mapa. Assim que a acao do evento ocorrer eh visto o local onde o treinador
+ * se encontra, se for no gramado ele tem probabilidade de 60% para lutarc contra um pokemon silvestre.
+ */
+	private class Jornada extends Eventos{
+		private int probabilidade;
+		private CriaCampo campo;
+		public Jornada(long tempoEvento) {
+			super(tempoEvento+3000);
+			campo= new CriaCampo();
+			campo.andarBoneco(1, 1);
+		}
 
+		public void acao() {
+			
+			long tempoEvento = System.currentTimeMillis();
+			campo.andarBoneco(campo.getLinha(), campo.getColuna()); //movimentar no mapa
 
+			Random prob= new Random ();	
+
+			if(campo.PegarLocalBoneco()=="G"){//sd o treinador esta no gramado
+				probabilidade=prob.nextInt(10)+1;
+				if (probabilidade>2 && probabilidade<=8){//60% de lutar
+					tipoLuta=2;
+					AdicionaEvento(new IniciarLuta(tempoEvento));
+				}				
+			}			
+			AdicionaEvento(new Jornada(tempoEvento+3000));
+			
+		}
+
+		public String description() {
+			return ("Treinador andando no mapa");
+		}
+		
+		
+	}
 	
 	
 	
@@ -266,16 +301,13 @@ public class LutaPokemon extends Controlador{
 	//------------------------------------------------------
 
 	public static void main(String[] args)  {
-		/*
+		
 		LutaPokemon luta=new LutaPokemon();
 		long tempoEvento = System.currentTimeMillis();
-		tipoLuta=2;
 		luta.limparEventos();
-		luta.AdicionaEvento(luta.new IniciarLuta(tempoEvento));
-		luta.rodar();	*/	
-		CriaCampo campo= new CriaCampo();
-		campo.imprimirCampo();
-		campo.posicaoBoneco(4, 3);
+		luta.AdicionaEvento(luta.new Jornada(tempoEvento));
+		luta.rodar();		
+		
 	}
 	
 	
